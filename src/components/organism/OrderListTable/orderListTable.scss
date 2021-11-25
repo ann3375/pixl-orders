@@ -1,0 +1,91 @@
+@import '../../../styles/_variables.scss';
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+
+  &__body {
+    position: relative;
+
+    &_loading {
+      &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $color-ghost;
+        background-image: url('/assets/images/spinner.gif');
+        background-position: center;
+        background-repeat: no-repeat;
+        content: '';
+      }
+    }
+  }
+
+  &__header {
+    background: $color-mediumBlue;
+    position: sticky;
+    top: 0px;
+    height: 50px;
+    z-index: 10;
+    font-size: 16px;
+
+    & th:first-of-type {
+      position: sticky;
+      left: 0px;
+      background: $color-mediumBlue;
+      max-width: fit-content;
+    }
+  }
+
+  &__index {
+    position: sticky;
+    left: 0px;
+  }
+
+  &__row {
+    font-size: 14px;
+
+    &:nth-child(n) {
+      background: $color-white;
+      & th:first-of-type {
+        background: $color-white;
+      }
+    }
+
+    &:nth-child(2n) {
+      background: $color-wisdomblue;
+      & th:first-of-type {
+        background: $color-wisdomblue;
+      }
+    }
+
+    & td,
+    & th {
+      vertical-align: top;
+      text-align: justify;
+
+      padding: 10px;
+
+      &:not(:last-of-type) {
+        border-right: 1px solid$color-lightBlue;
+      }
+    }
+
+    &:hover,
+    &:hover th:first-of-type {
+      background: $color-lavender;
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .table {
+    &__header {
+      font-size: 14px;
+    }
+  }
+}

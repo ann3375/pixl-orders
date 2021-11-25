@@ -1,10 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { RootStoreContext } from '../store/RootStore';
-import { OrderListPage } from '../components/templates/OrderListPage/OrderListPage';
+import { OrderListPageTemplate } from '../components/templates/OrderListPage/OrderListPageTemplate';
+import { LOADING_STATE } from '../store/types/types';
+import { OrderListTable } from '../components/organism/OrderListTable';
 
-export const MainPage = observer(() => {
+export const MainPage = observer((): JSX.Element => {
   const { authStore, orderListStore } = useContext(RootStoreContext);
+
+  const isLoaded = orderListStore.loadingState === LOADING_STATE.LOADED;
 
   useEffect(() => {
     authStore.fetchAccessToken();
@@ -17,5 +21,9 @@ export const MainPage = observer(() => {
     }
   }, [orderListStore, authStore.tokens.accessToken]);
 
-  return <OrderListPage orderList={orderListStore.orderList} />;
+  return (
+    <OrderListPageTemplate
+      orderListTable={<OrderListTable orderList={orderListStore.orderList} isLoaded={isLoaded} />}
+    />
+  );
 });

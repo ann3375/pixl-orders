@@ -30,9 +30,12 @@ export class OrderListStore {
     this.orderList = orderList;
   }
 
-  async fetchOrderList(): Promise<void> {
+  async fetchOrderList(skip?: number): Promise<void> {
     this.loadingState = LOADING_STATE.PENDING;
-    const params = `oauth_token=${this.rootStore.authStore.tokens.accessToken}`;
+
+    const params = `oauth_token=${this.rootStore.authStore.tokens.accessToken}${
+      skip ? `&skip=${skip}` : ''
+    }`;
     try {
       await fetch(`/orders?${params}`, {
         method: 'GET',
@@ -55,7 +58,9 @@ export class OrderListStore {
         this.setError((e as Error).message);
       });
     } finally {
-      this.loadingState = LOADING_STATE.LOADED;
+      runInAction(() => {
+        this.loadingState = LOADING_STATE.LOADED;
+      });
     }
   }
 
@@ -84,7 +89,9 @@ export class OrderListStore {
         this.setError((e as Error).message);
       });
     } finally {
-      this.loadingState = LOADING_STATE.LOADED;
+      runInAction(() => {
+        this.loadingState = LOADING_STATE.LOADED;
+      });
     }
   }
 }
