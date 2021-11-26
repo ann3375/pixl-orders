@@ -5,7 +5,6 @@ import { OrderListPageTemplate } from '../components/templates/OrderListPage/Ord
 import { LOADING_STATE } from '../store/types/types';
 import { OrderListTable } from '../components/organism/OrderListTable';
 import { autorun } from 'mobx';
-import { Button } from '../components/atoms/Button';
 import { Pagination } from '../components/molecules/Pagination';
 
 export const MainPage = observer((): JSX.Element => {

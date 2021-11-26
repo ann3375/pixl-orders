@@ -62,7 +62,6 @@ export interface OrderListItem {
   LastDownloadedPaymentDocument: string;
   PaymentSystemUniqueId: string;
   GoogleClientId: string;
-  ContractorOrders?: any;
 }
 
 interface FetchOrderList {
