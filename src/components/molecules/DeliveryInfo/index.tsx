@@ -6,16 +6,15 @@ interface IDeliveryInfo extends ITableCell {
   deliveryInfo: DeliveryAddressType;
 }
 
-export const DeliveryInfo: React.FC<IDeliveryInfo> = ({ deliveryInfo }) => {
-  const { City, State, AddressLine1, AddressLine2, FullName, Phone } = deliveryInfo;
+export const DeliveryInfo: React.FC<IDeliveryInfo> = ({ deliveryInfo, className }) => {
   return (
-    <TableCell>
-      <p>{City}</p>
-      <p>{State}</p>
-      <p>{AddressLine1}</p>
-      <p>{AddressLine2}</p>
-      <p>{FullName}</p>
-      <p>{Phone}</p>
+    <TableCell className={className}>
+      <p>{deliveryInfo?.City}</p>
+      <p>{deliveryInfo?.State}</p>
+      <p>{deliveryInfo?.AddressLine1}</p>
+      <p>{deliveryInfo?.AddressLine2}</p>
+      <p>{deliveryInfo?.FullName}</p>
+      <p>{deliveryInfo?.Phone}</p>
     </TableCell>
   );
 };

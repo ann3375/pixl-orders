@@ -3,5 +3,19 @@
 .wrapper {
   height: 100vh;
   overflow: auto;
-  text-align: center;
+}
+
+.order-list__pagination {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  z-index: 10;
+}
+
+@media (max-width: $media-laptop) {
+  .order-list__pagination {
+    bottom: 20px;
+    left: 10px;
+    z-index: 10;
+  }
 }

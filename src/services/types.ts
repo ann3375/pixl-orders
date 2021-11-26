@@ -10,23 +10,23 @@ export interface FetchRequestTokenType {
 }
 
 export interface DeliveryAddressType {
-  ZipCode: string;
-  AddressLine1: string;
-  AddressLine2: string;
-  Description: string;
-  City: string;
-  Country: string;
-  State: string;
-  FullName: string;
-  Phone: string;
+  ZipCode?: string;
+  AddressLine1?: string;
+  AddressLine2?: string;
+  Description?: string;
+  City?: string;
+  Country?: string;
+  State?: string;
+  FullName?: string;
+  Phone?: string;
 }
 
 export interface Shipping {
-  Id: number;
-  Title: string;
-  Phone: string;
+  Id?: number;
+  Title?: string;
+  Phone?: string;
   Email?: string;
-  Type: string;
+  Type?: string;
 }
 
 export interface OrderListItem {

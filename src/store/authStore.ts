@@ -24,7 +24,10 @@ export class AuthStore {
   }
 
   async fetchRequestToken(): Promise<void> {
-    this.loadingState = LOADING_STATE.PENDING;
+    runInAction(() => {
+      this.loadingState = LOADING_STATE.PENDING;
+    });
+
     try {
       await fetch(`/oauth/requesttoken`, {
         method: 'GET',
@@ -47,13 +50,14 @@ export class AuthStore {
         this.setError((e as Error).message);
       });
     } finally {
-      this.loadingState = LOADING_STATE.LOADED;
+      runInAction(() => {
+        this.loadingState = LOADING_STATE.LOADED;
+      });
     }
   }
 
   async fetchAccessToken(): Promise<void> {
     await this.fetchRequestToken();
-    this.loadingState = LOADING_STATE.PENDING;
     const hash = createHash(this.tokens.requestToken);
 
     const params = `oauth_token=${this.tokens.requestToken}&grant_type=api&username=${process.env.REACT_APP_SECRET_PUBLIC_KEY}&password=${hash}`;
@@ -84,7 +88,9 @@ export class AuthStore {
         this.setError((e as Error).message);
       });
     } finally {
-      this.loadingState = LOADING_STATE.LOADED;
+      runInAction(() => {
+        this.loadingState = LOADING_STATE.LOADED;
+      });
     }
   }
 }

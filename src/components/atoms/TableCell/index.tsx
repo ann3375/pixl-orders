@@ -9,7 +9,7 @@ export interface ITableCell
 export const TableCell: React.FC<ITableCell> = ({ content, children, ...props }) => {
   return (
     <td {...props}>
-      <p>{content} </p>
+      {content && <p>{content} </p>}
       {children}
     </td>
   );

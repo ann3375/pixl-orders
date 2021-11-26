@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.pagination {
+  &__button {
+    padding: 10px 15px;
+    background: $color-mediumBlue;
+    border-radius: 12px;
+    &:not(:last-of-type) {
+      margin-right: 10px;
+    }
+  }
+}

@@ -6,13 +6,12 @@ interface IShippingInfo extends ITableCell {
   shippingInfo: Shipping;
 }
 
-export const ShippingInfo: React.FC<IShippingInfo> = ({ shippingInfo }) => {
-  const { Title, Phone, Email } = shippingInfo;
+export const ShippingInfo: React.FC<IShippingInfo> = ({ shippingInfo, className, ...props }) => {
   return (
-    <TableCell>
-      <p>{Title}</p>
-      <p>{Phone}</p>
-      <p>{Email}</p>
+    <TableCell className={className} {...props}>
+      <p>{shippingInfo?.Title}</p>
+      <p>{shippingInfo?.Phone}</p>
+      <p>{shippingInfo?.Email}</p>
     </TableCell>
   );
 };

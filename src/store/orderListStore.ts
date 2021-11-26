@@ -1,13 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { FetchOrderListCountType, FetchOrderListType, OrderListItem } from '../services/types';
+import { FetchOrderListType, OrderListItem } from '../services/types';
 import { RootStore } from './RootStore';
 import { LOADING_STATE } from './types/types';
-
-export interface FETCHAPITYPE<T> {
-  ApiVersion: string;
-  Result: T;
-  ResponseCode: number;
-}
 
 export class OrderListStore {
   rootStore: RootStore;
@@ -15,7 +9,7 @@ export class OrderListStore {
   loadingState = LOADING_STATE.NEVER;
   loadingError = '';
   orderList: OrderListItem[] = [];
-  orderListCount = 0;
+  page = 1;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
@@ -30,11 +24,18 @@ export class OrderListStore {
     this.orderList = orderList;
   }
 
-  async fetchOrderList(skip?: number): Promise<void> {
-    this.loadingState = LOADING_STATE.PENDING;
+  setPage(page: number): void {
+    this.page += page;
+  }
+
+  async fetchOrderList(): Promise<void> {
+    this.orderList = [];
+    runInAction(() => {
+      this.loadingState = LOADING_STATE.PENDING;
+    });
 
     const params = `oauth_token=${this.rootStore.authStore.tokens.accessToken}${
-      skip ? `&skip=${skip}` : ''
+      this.page ? `&skip=${this.page * 10}` : ''
     }`;
     try {
       await fetch(`/orders?${params}`, {
@@ -44,37 +45,6 @@ export class OrderListStore {
           res.json().then((res: FetchOrderListType) => {
             runInAction(() => {
               this.setOrderList(res.Result);
-            });
-          });
-        }
-        if (!res.ok) {
-          runInAction(() => {
-            this.setError('Something goes wrong');
-          });
-        }
-      });
-    } catch (e) {
-      runInAction(() => {
-        this.setError((e as Error).message);
-      });
-    } finally {
-      runInAction(() => {
-        this.loadingState = LOADING_STATE.LOADED;
-      });
-    }
-  }
-
-  async fetchOrderListCount(): Promise<void> {
-    this.loadingState = LOADING_STATE.PENDING;
-    const params = `oauth_token=${this.rootStore.authStore.tokens.accessToken}`;
-    try {
-      await fetch(`/orders/count?${params}`, {
-        method: 'GET',
-      }).then((res) => {
-        if (res.ok) {
-          res.json().then((res: FetchOrderListCountType) => {
-            runInAction(() => {
-              this.orderListCount = res.Result.count;
             });
           });
         }

@@ -46,6 +46,11 @@
     left: 0px;
   }
 
+  &__delivery-info,
+  &__shiping-info {
+    white-space: pre;
+  }
+
   &__row {
     font-size: 14px;
 
@@ -79,6 +84,11 @@
     &:hover th:first-of-type {
       background: $color-lavender;
     }
+  }
+
+  &__load-link {
+    display: flex;
+    justify-content: center;
   }
 }
 
